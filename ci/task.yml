@@ -1,0 +1,24 @@
+---
+platform: linux
+
+outputs:
+- name: downloads
+- name: archive
+  optional: true
+
+caches:
+- path: cache
+
+run:
+  path: bash
+  args:
+    - -c
+    - |
+      set -euo pipefail
+
+      get-updates
+
+      if [[ -d archive ]]; then
+        echo "Compressing downloads into a tgz"
+        tar -cvzf archive/windows-updates-$(date +'%Y-%m-%d').tgz -C downloads
+      fi

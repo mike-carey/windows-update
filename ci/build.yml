@@ -1,0 +1,24 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: concourse/builder-task
+
+params:
+  REPOSITORY: windows-update
+  CONTEXT: context
+
+inputs:
+- name: context
+
+outputs:
+- name: image
+- name: rootfs
+
+caches:
+- path: cache
+
+run:
+  path: build

@@ -1,0 +1,78 @@
+---
+resources:
+- name: image
+  type: s3
+  source:
+    bucket: ((s3.bucket))
+    access_key_id: ((s3.access_key_id))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: windows-update-image.tgz
+
+- name: windows-updates
+  type: s3
+  source:
+    bucket: ((s3.bucket))
+    access_key_id: ((s3.access_key_id))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: windows-updates-(.*).tgz
+
+- name: source-trigger
+  type: git
+  source:
+    uri: ((git.uri))
+    branch: ((git.branch))
+    private_key: ((git.private_key))
+    paths:
+    - bin/*
+    - src/*
+    - Dockerfile
+    - requirements.txt
+
+- name: source
+  type: git
+  source:
+    uri: ((git.uri))
+    branch: ((git.branch))
+    private_key: ((git.private_key))
+
+jobs:
+- name: build-image
+  serial: true
+  plan:
+  - in_parallel:
+    - get: source-trigger
+      trigger: true
+    - get: source
+  - task: build-docker-image
+    file: source/ci/build.yml
+    privileged: true
+    input_mapping:
+      context: source
+  - task: run-tests
+    file: source/ci/test.yml
+    image: rootfs
+  - task: version-image
+    file: source/ci/version.yml
+    input_mapping:
+      input: image
+  - put: image
+    params:
+      file: output/image-*.tgz
+
+- name: get-windows-updates
+  serial: true
+  plan:
+  - in_parallel:
+    - get: source
+    - get: windows-updates
+    - get: image
+      params:
+        unpack: true
+      passed:
+      - build-image
+  - task: get-windows-updates
+    file: source/ci/task.yml
+    image: image
+  - put: windows-updates
+    params:
+      file: archive/windows-updates-*.tgz

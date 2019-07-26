@@ -1,0 +1,28 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+
+params:
+  INPUT_FILE: image.tar
+  OUTPUT_FILE: image-$version.tgz
+
+inputs:
+- name: source
+- name: input
+
+outputs:
+- name: output
+
+run:
+  path: bash
+  args:
+    - -c
+    - |
+      set -eo pipefail
+      version=$(cat source/.git/short_ref)
+      output_file=$(echo $OUTPUT_FILE)
+      gzip input/$INPUT_FILE > output/$output_file
