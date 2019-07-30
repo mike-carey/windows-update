@@ -64,7 +64,8 @@ jobs:
   plan:
   - in_parallel:
     - get: source
-    - get: windows-updates
+    - try:
+        get: windows-updates
     - get: image
       params:
         unpack: true

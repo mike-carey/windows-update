@@ -1,6 +1,6 @@
 ---
 git:
-  uri: https://github.com/mike-carey/windows-update
+  uri: https://github.com/mike-carey/windows-update.git
   branch: master
   private_key: ((git_private_key))
 

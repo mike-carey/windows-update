@@ -10,7 +10,6 @@ image_resource:
 outputs:
 - name: downloads
 - name: archive
-  optional: true
 
 caches:
 - path: cache
