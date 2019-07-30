@@ -25,6 +25,7 @@ ARG INSTALL_DIR=/srv/windows-update
 ADD requirements.txt ${INSTALL_DIR:-/srv/windows-update}/requirements.txt
 RUN pip install -r ${INSTALL_DIR:-/srv/windows-update}/requirements.txt
 
-ADD src bin ${INSTALL_DIR:-/srv/windows-update}/
+COPY src ${INSTALL_DIR:-/srv/windows-update}/src/
+COPY bin ${INSTALL_DIR:-/srv/windows-update}/bin/
 
 ENV PATH="${INSTALL_DIR:-/srv/windows-update}/bin:${PATH}"
