@@ -46,9 +46,10 @@ class ServiceStackKbidFinder(KbidFinder, KbidMixin):
 class Scraper(object):
   """Scrapes the MS webpack for update urls."""
 
-  def __init__(self, driver, os_name):
+  def __init__(self, driver, os_name, sleep_time=2):
     self.driver = driver
     self.os_name = os_name
+    self.sleep_time = sleep_time
 
   def get_urls(self, url):
     self.driver.get(url)
@@ -67,7 +68,7 @@ class Scraper(object):
       self.driver.find_element_by_id(link_to_click).click()
       util.log("Switching to the other window")
       self.driver.switch_to.window(self.driver.window_handles[1])
-      time.sleep(2)
+      time.sleep(self.sleep_time)
       for a in self.driver.find_elements_by_tag_name('a'):
         util.log("Found a new link")
         urls.append(a.get_property('href'))

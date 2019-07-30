@@ -7,6 +7,10 @@ image_resource:
     repository: mcarey/windows-update
     tag: latest
 
+params:
+  # The number of seconds to wait for the page to load
+  SLEEP_TIME: 2
+
 outputs:
 - name: downloads
 - name: archive

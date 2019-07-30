@@ -25,6 +25,10 @@ build = env('build', '17763')
 os_name = env('os_name', 'Windows Server 2019')
 xml_namespace = env('xml_namespace', 'http://www.w3.org/2005/Atom')
 
+sleep_time = env('sleep_time', 2, _type=int)
+print(sleep_time)
+print(type(sleep_time))
+
 cache_directory = env('cache_directory', 'cache')
 downloads_directory = env('downloads_directory', 'downloads')
 driver_directory = env('driver_directory', 'driver')

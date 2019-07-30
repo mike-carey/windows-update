@@ -20,7 +20,7 @@ class Runner(object):
     self.cache = fs.Cache(config.cache_path)
     self.driver = webdriver.Chrome(executable_path = config.driver_path, chrome_options=self.chrome_options)
     self.downloader = fs.Downloader(config.downloads_directory)
-    self.scraper = scrape.Scraper(self.driver, os_name=config.os_name)
+    self.scraper = scrape.Scraper(self.driver, os_name=config.os_name, sleep_time=config.sleep_time)
 
   def run(self):
     if not os.path.exists(config.driver_path):
