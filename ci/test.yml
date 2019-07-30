@@ -1,6 +1,12 @@
 ---
 platform: linux
 
+image_resource:
+  type: docker-image
+  source:
+    repository: mcarey/windows-update
+    tag: latest
+
 params:
   DEVELOPMENT: true
   SRC_DIR: src
