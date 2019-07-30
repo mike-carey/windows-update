@@ -1,0 +1,10 @@
+---
+git:
+  uri: https://github.com/mike-carey/windows-update
+  branch: master
+  private_key: ((git_private_key))
+
+s3:
+  bucket: windows-update
+  access_key_id: ((s3_access_key_id))
+  secret_access_key: ((s3_secret_access_key))
