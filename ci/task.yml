@@ -29,5 +29,5 @@ run:
 
       if [[ -d archive ]]; then
         echo "Compressing downloads into a tgz"
-        tar -cvzf archive/windows-updates-$(date +'%Y-%m-%d').tgz -C downloads
+        tar -cvzf archive/windows-updates-$(date +'%Y-%m-%d').tgz -C downloads .
       fi
